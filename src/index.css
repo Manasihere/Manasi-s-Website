@@ -76,9 +76,6 @@ html.light {
     color: var(--color-text-primary);
     transition: background-color 0.3s ease, color 0.3s ease;
   }
-  section[id], *[id] {
-    scroll-margin-top: 100px !important; /* Accounts for sticky navigation header */
-  }
 }
 
 /* Custom premium scrollbar styling */

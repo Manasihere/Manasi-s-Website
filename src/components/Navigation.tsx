@@ -83,12 +83,32 @@ export default function Navigation({ theme, onToggleTheme, onOpenAdmin }: Naviga
   }, []);
 
   const handleNavClick = (e: React.MouseEvent, id: string) => {
-    // We let the browser handle the navigation using standard anchor links
-    // The CSS `scroll-behavior: smooth` and `scroll-margin-top` will handle the rest
+    e.preventDefault();
     setIsMobileMenuOpen(false);
-    
-    // Optional: Update active section immediately for better UX
+
+    // Update active section immediately for better UX
     setActiveSection(id);
+
+    // Update URL hash safely without native jump
+    if (window.history.pushState) {
+      window.history.pushState(null, "", `#${id}`);
+    }
+
+    // Scroll to section robustly using window.scrollTo
+    // We use a small timeout to allow mobile menu closing layout shifts to finish
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) {
+        const headerOffset = 100;
+        const elementPosition = el.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.scrollY - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
+        });
+      }
+    }, 50);
   };
 
   return (
