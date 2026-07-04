@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navigation from "./components/Navigation";
 import Hero from "./components/Hero";
 import About from "./components/About";
@@ -15,13 +15,31 @@ import Learning from "./components/Learning";
 import Philosophy from "./components/Philosophy";
 import BeyondWork from "./components/BeyondWork";
 import ContactForms from "./components/ContactForms";
-import AIChatRepresentative from "./components/AIChatRepresentative";
 import AdminPortal from "./components/AdminPortal";
-import { Lock, Linkedin, Mail, Heart, ArrowUp, Sparkles } from "lucide-react";
+import { Linkedin, Mail, Heart, ArrowUp, Sparkles } from "lucide-react";
 
 export default function App() {
   const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    const saved = localStorage.getItem('theme');
+    if (saved === 'light' || saved === 'dark') return saved;
+    return 'dark'; // Default to dark mode
+  });
+
+  const toggleTheme = () => {
+    setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
+  };
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === 'light') {
+      root.classList.add('light');
+    } else {
+      root.classList.remove('light');
+    }
+    localStorage.setItem('theme', theme);
+  }, [theme]);
 
   const handleRefreshData = () => {
     setRefreshTrigger(prev => prev + 1);
@@ -35,18 +53,22 @@ export default function App() {
   };
 
   return (
-    <div className="relative min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-teal-500/20 selection:text-teal-200 overflow-x-hidden">
+    <div className="relative min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-teal-500/20 selection:text-teal-200">
       
       {/* Frosted Glass premium ambient backgrounds */}
-      <div className="absolute inset-0 z-0 opacity-50 pointer-events-none overflow-hidden">
-        <div className="absolute top-[-5%] left-[-10%] w-[600px] h-[600px] rounded-full blur-[130px] bg-[#1a2e4d]" />
-        <div className="absolute top-[20%] right-[-10%] w-[500px] h-[500px] rounded-full blur-[120px] bg-[#2d3a31]" />
-        <div className="absolute top-[45%] left-[-5%] w-[600px] h-[600px] rounded-full blur-[140px] bg-[#15233c]" />
-        <div className="absolute bottom-[15%] right-[-5%] w-[500px] h-[500px] rounded-full blur-[110px] bg-[#1f2f23]" />
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden transition-opacity duration-500" style={{ opacity: 'var(--theme-opacity, 0.5)' }}>
+        <div className="absolute top-[-5%] left-[-10%] w-[600px] h-[600px] rounded-full blur-[130px] bg-ambient-1 transition-all duration-500" />
+        <div className="absolute top-[20%] right-[-10%] w-[500px] h-[500px] rounded-full blur-[120px] bg-ambient-2 transition-all duration-500" />
+        <div className="absolute top-[45%] left-[-5%] w-[600px] h-[600px] rounded-full blur-[140px] bg-ambient-3 transition-all duration-500" />
+        <div className="absolute bottom-[15%] right-[-5%] w-[500px] h-[500px] rounded-full blur-[110px] bg-ambient-4 transition-all duration-500" />
       </div>
 
       {/* Global Sticky Navigation */}
-      <Navigation onOpenAdmin={() => setIsAdminOpen(true)} />
+      <Navigation
+        theme={theme}
+        onToggleTheme={toggleTheme}
+        onOpenAdmin={() => setIsAdminOpen(true)}
+      />
 
       {/* Main Single Page Layout Sections */}
       <main className="space-y-0">
@@ -109,10 +131,10 @@ export default function App() {
               </a>
               <button
                 onClick={() => setIsAdminOpen(true)}
-                className="p-1 rounded hover:bg-slate-900 text-slate-600 hover:text-teal-300 transition-all cursor-pointer"
+                className="text-[10px] text-slate-500 hover:text-teal-400 transition-colors cursor-pointer"
                 title="Open Administrative Submission Portal"
               >
-                <Lock className="w-3.5 h-3.5" />
+                Admin Access
               </button>
             </div>
 
@@ -143,9 +165,6 @@ export default function App() {
           </button>
         </div>
       </footer>
-
-      {/* Persistent global floating AI Assistant */}
-      <AIChatRepresentative />
 
     </div>
   );

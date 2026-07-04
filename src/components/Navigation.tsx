@@ -4,14 +4,16 @@
  */
 
 import React, { useState, useEffect } from "react";
-import { Menu, X, Lock, Terminal } from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
 interface NavigationProps {
+  theme: "dark" | "light";
+  onToggleTheme: () => void;
   onOpenAdmin: () => void;
 }
 
-export default function Navigation({ onOpenAdmin }: NavigationProps) {
+export default function Navigation({ theme, onToggleTheme, onOpenAdmin }: NavigationProps) {
   const [activeSection, setActiveSection] = useState("home");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -38,13 +40,7 @@ export default function Navigation({ onOpenAdmin }: NavigationProps) {
         setTimeout(() => {
           const el = document.getElementById(id);
           if (el) {
-            const rect = el.getBoundingClientRect();
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            const offsetTop = rect.top + scrollTop - 85;
-            window.scrollTo({
-              top: offsetTop,
-              behavior: "smooth"
-            });
+            el.scrollIntoView({ behavior: "smooth" });
           }
         }, 300);
       }
@@ -53,6 +49,13 @@ export default function Navigation({ onOpenAdmin }: NavigationProps) {
     const handleScroll = () => {
       // Background shading on scroll
       setScrolled(window.scrollY > 20);
+
+      // Check if near bottom of page - if so, highlight contact
+      const isAtBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 100;
+      if (isAtBottom) {
+        setActiveSection("contact");
+        return;
+      }
 
       // Section intersection detection
       const scrollPosition = window.scrollY + 120;
@@ -80,31 +83,17 @@ export default function Navigation({ onOpenAdmin }: NavigationProps) {
   }, []);
 
   const handleNavClick = (e: React.MouseEvent, id: string) => {
-    e.preventDefault();
+    // We let the browser handle the navigation using standard anchor links
+    // The CSS `scroll-behavior: smooth` and `scroll-margin-top` will handle the rest
     setIsMobileMenuOpen(false);
-
-    // Update the browser's address bar hash without jumping
-    if (window.history.pushState) {
-      window.history.pushState(null, "", `#${id}`);
-    } else {
-      window.location.hash = `#${id}`;
-    }
-
-    const el = document.getElementById(id);
-    if (el) {
-      const rect = el.getBoundingClientRect();
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const offsetTop = rect.top + scrollTop - 85;
-      window.scrollTo({
-        top: offsetTop,
-        behavior: "smooth"
-      });
-    }
+    
+    // Optional: Update active section immediately for better UX
+    setActiveSection(id);
   };
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${
         scrolled
           ? "py-3 bg-white/5 backdrop-blur-xl border-b border-white/10 shadow-lg"
           : "py-5 bg-transparent border-b border-transparent"
@@ -148,24 +137,33 @@ export default function Navigation({ onOpenAdmin }: NavigationProps) {
             </a>
           ))}
 
-          {/* Secure Admin Key shortcut in header */}
+          {/* Elegant Glassmorphism Theme Toggle Button - Desktop */}
           <button
-            onClick={onOpenAdmin}
-            className="ml-3 p-1.5 rounded-lg bg-slate-900/60 hover:bg-slate-850 text-slate-400 hover:text-teal-300 border border-slate-850 hover:border-teal-500/20 transition-all duration-200 cursor-pointer"
-            title="Open Administrative Submissions Portal"
+            onClick={onToggleTheme}
+            className="ml-3 p-1.5 rounded-lg bg-slate-900/60 hover:bg-slate-850 text-teal-300 hover:text-teal-200 border border-slate-850 hover:border-teal-500/20 transition-all duration-200 cursor-pointer flex items-center justify-center shadow-sm"
+            title={theme === "light" ? "Switch to Dark Mode" : "Switch to Light Mode"}
           >
-            <Lock className="w-3.5 h-3.5" />
+            {theme === "light" ? (
+              <Moon className="w-4 h-4 text-slate-600" />
+            ) : (
+              <Sun className="w-4 h-4 text-teal-300" />
+            )}
           </button>
         </nav>
 
         {/* Hamburger Trigger */}
         <div className="flex items-center gap-2 lg:hidden">
+          {/* Elegant Glassmorphism Theme Toggle Button - Mobile */}
           <button
-            onClick={onOpenAdmin}
-            className="p-2 rounded-lg bg-slate-900 text-slate-400 border border-slate-850"
-            title="Open Portal"
+            onClick={onToggleTheme}
+            className="p-2 rounded-lg bg-slate-900 text-teal-300 hover:text-teal-200 border border-slate-850 cursor-pointer flex items-center justify-center"
+            title={theme === "light" ? "Switch to Dark Mode" : "Switch to Light Mode"}
           >
-            <Lock className="w-4 h-4" />
+            {theme === "light" ? (
+              <Moon className="w-4 h-4 text-slate-600" />
+            ) : (
+              <Sun className="w-4 h-4 text-teal-300" />
+            )}
           </button>
           
           <button

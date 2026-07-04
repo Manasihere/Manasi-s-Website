@@ -1,21 +1,83 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
 @import "tailwindcss";
 
+:root {
+  /* Default: Dark mode values as specified */
+  --color-bg-primary: #0a0f1d;
+  --color-bg-secondary: #111827;
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #94a3b8;
+  --color-accent-light: #b1cbb1; /* sage-300 */
+  --color-accent-medium: #8BA888; /* sage-400 */
+  --color-accent-true: #718f6e; /* sage-500 */
+  --color-accent-dark: #577354; /* sage-600 */
+  --color-border-theme: rgba(255, 255, 255, 0.08);
+  --color-border-theme-muted: rgba(255, 255, 255, 0.04);
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-hover-bg: rgba(255, 255, 255, 0.06);
+  --glass-hover-border: rgba(255, 255, 255, 0.12);
+  --ambient-bg-1: #1a2e4d;
+  --ambient-bg-2: #2d3a31;
+  --ambient-bg-3: #15233c;
+  --ambient-bg-4: #1f2f23;
+  --theme-opacity: 0.5;
+}
+
+html.light {
+  /* Light mode values as specified */
+  --color-bg-primary: #FAFBF9; /* Soft white background */
+  --color-bg-secondary: #F0F3EF; /* Light gray-sage panels */
+  --color-text-primary: #1F291F; /* Dark sage-charcoal typography */
+  --color-text-secondary: #586558; /* Muted gray-green typography */
+  --color-accent-light: #4D644F; /* Darker sage for readability on light */
+  --color-accent-medium: #3E5340;
+  --color-accent-true: #5A735C;
+  --color-accent-dark: #2E3E30;
+  --color-border-theme: rgba(0, 0, 0, 0.08); /* Light transparent borders */
+  --color-border-theme-muted: rgba(0, 0, 0, 0.04);
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-hover-bg: rgba(255, 255, 255, 0.9);
+  --glass-hover-border: rgba(0, 0, 0, 0.12);
+  --ambient-bg-1: #E0EBE2;
+  --ambient-bg-2: #D2DFD4;
+  --ambient-bg-3: #E6EEE8;
+  --ambient-bg-4: #DAE5DC;
+  --theme-opacity: 0.75;
+}
+
 @theme {
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
-  --color-slate-950: #0a0f1d;
-  --color-teal-300: #b1cbb1;
-  --color-teal-400: #8BA888;
-  --color-teal-500: #718f6e;
-  --color-teal-600: #577354;
+  
+  /* Dynamic colors linked to light/dark custom properties */
+  --color-slate-950: var(--color-bg-primary);
+  --color-slate-900: var(--color-bg-secondary);
+  --color-slate-100: var(--color-text-primary);
+  --color-slate-200: var(--color-text-primary);
+  --color-slate-300: var(--color-text-primary);
+  --color-slate-400: var(--color-text-secondary);
+  --color-slate-500: var(--color-text-secondary);
+  --color-slate-600: var(--color-text-secondary);
+  
+  --color-teal-300: var(--color-accent-light);
+  --color-teal-400: var(--color-accent-medium);
+  --color-teal-500: var(--color-accent-true);
+  --color-teal-600: var(--color-accent-dark);
+  
+  --color-ambient-1: var(--ambient-bg-1);
+  --color-ambient-2: var(--ambient-bg-2);
+  --color-ambient-3: var(--ambient-bg-3);
+  --color-ambient-4: var(--ambient-bg-4);
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
+    background-color: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
-  section[id] {
-    scroll-margin-top: 96px; /* Accounts for sticky navigation header */
+  section[id], *[id] {
+    scroll-margin-top: 100px !important; /* Accounts for sticky navigation header */
   }
 }
 
@@ -26,24 +88,26 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(10, 15, 29, 0.8);
+  background: var(--color-bg-primary);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--color-border-theme);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--color-accent-light);
+  opacity: 0.5;
 }
 
 /* Glassmorphism smooth animations & design */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--glass-bg);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--color-border-theme);
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .glass-panel-hover {
@@ -51,9 +115,9 @@
 }
 
 .glass-panel-hover:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.16);
-  box-shadow: 0 12px 40px -12px rgba(0, 0, 0, 0.4);
+  background: var(--glass-hover-bg);
+  border-color: var(--glass-hover-border);
+  box-shadow: 0 12px 40px -12px rgba(0, 0, 0, 0.12);
   transform: translateY(-2px);
 }
 

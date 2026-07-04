@@ -16,6 +16,9 @@ interface AdminPortalProps {
 
 export default function AdminPortal({ onClose, onRefreshTrigger }: AdminPortalProps) {
   const [passcode, setPasscode] = useState("");
+  const [token, setToken] = useState<string | null>(() => {
+    return sessionStorage.getItem("admin_token");
+  });
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [error, setError] = useState<string | null>(null);
   
@@ -24,14 +27,31 @@ export default function AdminPortal({ onClose, onRefreshTrigger }: AdminPortalPr
   const [isLoading, setIsLoading] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
 
+  useEffect(() => {
+    if (token) {
+      setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
+    }
+  }, [token]);
+
   const fetchSubmissions = async () => {
+    if (!token) return;
     setIsLoading(true);
     try {
-      const response = await fetch("/api/submissions");
+      const response = await fetch("/api/submissions", {
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      });
       if (response.ok) {
         const data = await response.json();
         setContactMessages(data.contactMessages || []);
         setResumeRequests(data.resumeRequests || []);
+      } else if (response.status === 401) {
+        sessionStorage.removeItem("admin_token");
+        setToken(null);
+        setError("Session expired or unauthorized. Please log in again.");
       }
     } catch (err) {
       console.error("Failed to load submissions", err);
@@ -46,21 +66,38 @@ export default function AdminPortal({ onClose, onRefreshTrigger }: AdminPortalPr
     }
   }, [isAuthenticated, refreshKey]);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (passcode === "admin123") {
-      setIsAuthenticated(true);
-      setError(null);
-    } else {
-      setError("Invalid administrative passcode. Please try again.");
+    setError(null);
+    try {
+      const response = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ passcode })
+      });
+      if (response.ok) {
+        const data = await response.json();
+        sessionStorage.setItem("admin_token", data.token);
+        setToken(data.token);
+        setPasscode("");
+      } else {
+        const errData = await response.json();
+        setError(errData.error || "Invalid administrative passcode. Please try again.");
+      }
+    } catch (err) {
+      setError("An error occurred during verification. Please try again.");
     }
   };
 
   const updateRequestStatus = async (id: string, status: 'approved' | 'declined') => {
+    if (!token) return;
     try {
       const response = await fetch(`/api/resume-request/${id}/status`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
         body: JSON.stringify({ status })
       });
       if (response.ok) {
@@ -75,10 +112,14 @@ export default function AdminPortal({ onClose, onRefreshTrigger }: AdminPortalPr
   };
 
   const toggleMessageRead = async (id: string, currentRead: boolean) => {
+    if (!token) return;
     try {
       const response = await fetch(`/api/contact/${id}/read`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
         body: JSON.stringify({ read: !currentRead })
       });
       if (response.ok) {
@@ -106,12 +147,25 @@ export default function AdminPortal({ onClose, onRefreshTrigger }: AdminPortalPr
               <p className="text-[10px] font-mono text-slate-400">Secure Audit & Submission Panel</p>
             </div>
           </div>
-          <button
-            onClick={onClose}
-            className="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-slate-200 border border-slate-800 transition-colors text-xs cursor-pointer"
-          >
-            Close Portal
-          </button>
+          <div className="flex items-center gap-2">
+            {isAuthenticated && (
+              <button
+                onClick={() => {
+                  sessionStorage.removeItem("admin_token");
+                  setToken(null);
+                }}
+                className="px-3 py-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300 border border-red-500/20 transition-colors text-xs cursor-pointer"
+              >
+                Log Out
+              </button>
+            )}
+            <button
+              onClick={onClose}
+              className="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-slate-200 border border-slate-800 transition-colors text-xs cursor-pointer"
+            >
+              Close Portal
+            </button>
+          </div>
         </div>
 
         {/* Login Page */}
@@ -123,12 +177,9 @@ export default function AdminPortal({ onClose, onRefreshTrigger }: AdminPortalPr
                   <Lock className="w-5 h-5 text-slate-400" />
                 </div>
                 <h4 className="text-sm font-semibold text-slate-200">Enter Access Key</h4>
-                <p className="text-xs text-slate-400">
+                <p className="text-xs text-slate-400 leading-relaxed">
                   Enter administrative passcode to view active resume requests and message submissions.
                 </p>
-                <div className="inline-block px-2.5 py-1 text-[10px] font-mono bg-teal-500/10 border border-teal-500/20 text-teal-300 rounded mt-2">
-                  Passcode Hint: <span className="font-semibold select-all">admin123</span>
-                </div>
               </div>
 
               <div className="space-y-1">

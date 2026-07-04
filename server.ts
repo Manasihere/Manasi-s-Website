@@ -92,8 +92,23 @@ async function startServer() {
     res.json({ status: "ok", mode: process.env.NODE_ENV || "development" });
   });
 
+  // POST admin login
+  app.post("/api/admin/login", (req, res) => {
+    const { passcode } = req.body;
+    const correctPasscode = process.env.ADMIN_PASSCODE || "Website@123";
+    if (passcode === correctPasscode) {
+      res.json({ success: true, token: "secure-admin-token-12345" });
+    } else {
+      res.status(401).json({ error: "Invalid administrative passcode. Access denied." });
+    }
+  });
+
   // GET submissions (Secured view for portfolio dashboard demo)
   app.get("/api/submissions", (req, res) => {
+    const authHeader = req.headers.authorization;
+    if (authHeader !== "Bearer secure-admin-token-12345") {
+      return res.status(401).json({ error: "Unauthorized access" });
+    }
     res.json({
       contactMessages,
       resumeRequests
@@ -145,6 +160,11 @@ async function startServer() {
 
   // POST approve/decline resume request (for interactive demo dashboard)
   app.post("/api/resume-request/:id/status", (req, res) => {
+    const authHeader = req.headers.authorization;
+    if (authHeader !== "Bearer secure-admin-token-12345") {
+      return res.status(401).json({ error: "Unauthorized access" });
+    }
+
     const { id } = req.params;
     const { status } = req.body;
 
@@ -163,6 +183,11 @@ async function startServer() {
 
   // POST mark message as read
   app.post("/api/contact/:id/read", (req, res) => {
+    const authHeader = req.headers.authorization;
+    if (authHeader !== "Bearer secure-admin-token-12345") {
+      return res.status(401).json({ error: "Unauthorized access" });
+    }
+
     const { id } = req.params;
     const { read } = req.body;
 
