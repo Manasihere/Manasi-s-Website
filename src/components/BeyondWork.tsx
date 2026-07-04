@@ -55,7 +55,7 @@ export default function BeyondWork() {
               key={idx}
               className="glass-panel glass-panel-hover p-6 rounded-2xl flex flex-col sm:flex-row items-start gap-4"
             >
-              <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex-shrink-0">
+              <div className="p-3 rounded-xl bg-badge-bg border border-badge-border flex-shrink-0">
                 {item.icon}
               </div>
               <div className="space-y-2">

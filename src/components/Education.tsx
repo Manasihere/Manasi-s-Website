@@ -97,7 +97,7 @@ export default function Education() {
               className={`glass-panel glass-panel-hover p-6 sm:p-8 rounded-3xl transition-all relative overflow-hidden ${
                 item.primary 
                   ? "border border-teal-500/20 bg-gradient-to-br from-teal-500/[0.03] to-transparent shadow-[0_12px_40px_-15px_rgba(20,184,166,0.1)]" 
-                  : "border border-white/5 bg-white/[0.01]"
+                  : "border border-badge-border bg-badge-bg"
               }`}
             >
               {/* Subtle background element for primary card */}
@@ -110,7 +110,7 @@ export default function Education() {
                 <div className={`p-3.5 rounded-2xl flex-shrink-0 flex items-center justify-center ${
                   item.primary 
                     ? "bg-teal-500/10 border border-teal-500/25 text-teal-300 shadow-inner" 
-                    : "bg-white/5 border border-white/10 text-slate-300"
+                    : "bg-badge-bg border border-badge-border text-slate-300"
                 }`}>
                   {item.icon}
                 </div>
@@ -122,7 +122,7 @@ export default function Education() {
                       <span className={`text-[9px] font-mono tracking-widest uppercase font-bold px-2 py-0.5 rounded-md ${
                         item.primary 
                           ? "bg-teal-400/20 text-teal-200 border border-teal-400/25" 
-                          : "bg-white/5 text-slate-400 border border-white/10"
+                          : "bg-badge-bg text-slate-400 border border-badge-border"
                       }`}>
                         {item.type}
                       </span>
@@ -152,7 +152,7 @@ export default function Education() {
                   </p>
 
                   {/* Highlight bullets */}
-                  <div className="pt-2 border-t border-white/5">
+                  <div className="pt-2 border-t border-badge-border">
                     <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] text-slate-400">
                       {item.highlights.map((bullet, bIdx) => (
                         <li key={bIdx} className="flex items-center gap-2">
@@ -165,14 +165,14 @@ export default function Education() {
                 </div>
 
                 {/* Date Tag */}
-                <div className="self-stretch sm:self-start flex sm:flex-col justify-between sm:items-end gap-1.5 mt-2 sm:mt-0 pt-4 sm:pt-0 border-t sm:border-t-0 border-white/5 sm:border-none">
+                <div className="self-stretch sm:self-start flex sm:flex-col justify-between sm:items-end gap-1.5 mt-2 sm:mt-0 pt-4 sm:pt-0 border-t sm:border-t-0 border-badge-border sm:border-none">
                   <span className="text-[10px] font-mono text-slate-500 uppercase flex items-center gap-1">
                     <Calendar className="w-3.5 h-3.5" /> Date Accomplished
                   </span>
                   <span className={`text-[11px] font-mono font-bold px-3 py-1 rounded-lg border ${
                     item.primary 
                       ? "bg-teal-500/10 border-teal-500/20 text-teal-300" 
-                      : "bg-white/5 border-white/10 text-slate-300"
+                      : "bg-badge-bg border-badge-border text-slate-300"
                   }`}>
                     {item.date}
                   </span>

@@ -17,10 +17,10 @@ export default function Philosophy() {
         
         <div className="glass-panel p-8 sm:p-14 rounded-3xl text-center space-y-10 shadow-2xl relative overflow-hidden">
           {/* Subtle decoration within glass */}
-          <div className="absolute bottom-[-40px] right-[-40px] w-64 h-64 bg-white/[0.02] rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-[-40px] right-[-40px] w-64 h-64 bg-badge-bg rounded-full blur-3xl pointer-events-none" />
           
           <div className="flex justify-center relative z-10">
-            <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-teal-300 shadow-sm">
+            <div className="w-12 h-12 rounded-full bg-badge-bg border border-badge-border flex items-center justify-center text-teal-300 shadow-sm">
               <Quote className="w-5 h-5" />
             </div>
           </div>

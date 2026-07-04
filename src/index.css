@@ -21,6 +21,10 @@
   --ambient-bg-3: #15233c;
   --ambient-bg-4: #1f2f23;
   --theme-opacity: 0.5;
+  --badge-bg: rgba(255, 255, 255, 0.05);
+  --badge-border: rgba(255, 255, 255, 0.1);
+  --badge-hover: rgba(255, 255, 255, 0.1);
+  --color-error-theme: #fca5a5;
 }
 
 html.light {
@@ -43,6 +47,10 @@ html.light {
   --ambient-bg-3: #E6EEE8;
   --ambient-bg-4: #DAE5DC;
   --theme-opacity: 0.75;
+  --badge-bg: rgba(0, 0, 0, 0.05);
+  --badge-border: rgba(0, 0, 0, 0.1);
+  --badge-hover: rgba(0, 0, 0, 0.1);
+  --color-error-theme: #b91c1c;
 }
 
 @theme {
@@ -58,15 +66,31 @@ html.light {
   --color-slate-500: var(--color-text-secondary);
   --color-slate-600: var(--color-text-secondary);
   
+  --color-teal-100: var(--color-accent-light);
+  --color-teal-200: var(--color-accent-light);
   --color-teal-300: var(--color-accent-light);
   --color-teal-400: var(--color-accent-medium);
   --color-teal-500: var(--color-accent-true);
   --color-teal-600: var(--color-accent-dark);
   
+  --color-emerald-200: var(--color-accent-light);
+  --color-emerald-300: var(--color-accent-light);
+  --color-emerald-400: var(--color-accent-medium);
+  --color-emerald-500: var(--color-accent-true);
+  --color-emerald-600: var(--color-accent-dark);
+
+  --color-red-300: var(--color-error-theme);
+  --color-red-400: var(--color-error-theme);
+  --color-red-500: var(--color-error-theme);
+  
   --color-ambient-1: var(--ambient-bg-1);
   --color-ambient-2: var(--ambient-bg-2);
   --color-ambient-3: var(--ambient-bg-3);
   --color-ambient-4: var(--ambient-bg-4);
+  
+  --color-badge-bg: var(--badge-bg);
+  --color-badge-border: var(--badge-border);
+  --color-badge-hover: var(--badge-hover);
 }
 
 @layer base {

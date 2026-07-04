@@ -35,7 +35,7 @@ export default function Hero() {
       <div className="max-w-5xl mx-auto px-6 relative z-10 w-full space-y-8 text-left">
         
         {/* Tag */}
-        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-teal-300 font-mono text-[10px] uppercase tracking-wider">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-badge-bg border border-badge-border text-teal-300 font-mono text-[10px] uppercase tracking-wider">
           <Sparkles className="w-3.5 h-3.5 text-teal-400" />
           Strategic Finance Executive
         </div>
@@ -76,7 +76,7 @@ export default function Hero() {
           <a
             href="#resume"
             onClick={handleRequestResumeClick}
-            className="flex items-center gap-2 px-6 py-3.5 bg-white/5 hover:bg-white/10 text-slate-100 font-bold rounded-xl text-xs uppercase tracking-wider border border-white/10 hover:border-white/20 transition-all cursor-pointer"
+            className="flex items-center gap-2 px-6 py-3.5 bg-badge-bg hover:bg-badge-hover text-slate-100 font-bold rounded-xl text-xs uppercase tracking-wider border border-badge-border hover:border-white/20 transition-all cursor-pointer"
           >
             <FileText className="w-4 h-4 text-teal-300" />
             Request Resume

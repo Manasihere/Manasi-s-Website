@@ -71,10 +71,10 @@ export default function Highlights() {
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="text-[9px] font-mono tracking-widest uppercase text-teal-400 font-semibold px-2.5 py-1 rounded bg-white/5 border border-white/10">
+                    <span className="text-[9px] font-mono tracking-widest uppercase text-teal-400 font-semibold px-2.5 py-1 rounded bg-badge-bg border border-badge-border">
                       {item.tag}
                     </span>
-                    <div className="p-2 rounded-xl bg-white/5 border border-white/10">
+                    <div className="p-2 rounded-xl bg-badge-bg border border-badge-border">
                       {item.icon}
                     </div>
                   </div>

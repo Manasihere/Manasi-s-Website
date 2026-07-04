@@ -75,7 +75,7 @@ export default function About() {
                 key={idx}
                 className="glass-panel glass-panel-hover p-6 rounded-2xl flex flex-col justify-between space-y-4 shadow-sm"
               >
-                <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 w-11 h-11 flex items-center justify-center">
+                <div className="p-2.5 rounded-xl bg-badge-bg border border-badge-border w-11 h-11 flex items-center justify-center">
                   {val.icon}
                 </div>
                 <div className="space-y-2">

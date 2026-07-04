@@ -115,7 +115,7 @@ export default function Navigation({ theme, onToggleTheme, onOpenAdmin }: Naviga
     <header
       className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${
         scrolled
-          ? "py-3 bg-white/5 backdrop-blur-xl border-b border-white/10 shadow-lg"
+          ? "py-3 bg-badge-bg backdrop-blur-xl border-b border-badge-border shadow-lg"
           : "py-5 bg-transparent border-b border-transparent"
       }`}
     >

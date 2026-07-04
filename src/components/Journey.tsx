@@ -32,13 +32,13 @@ export default function Journey() {
         </div>
 
         {/* Timeline container */}
-        <div className="relative border-l border-white/10 ml-4 md:ml-6 space-y-16">
+        <div className="relative border-l border-badge-border ml-4 md:ml-6 space-y-16">
           
           {/* 1. Axis Bank (Manager - Treasury Operations) */}
           <div className="relative pl-8 md:pl-10 group">
             
             {/* Timeline node icon */}
-            <div className="absolute -left-4 md:-left-5 top-0 w-8 h-8 rounded-full bg-slate-950 border border-white/10 flex items-center justify-center text-teal-300 group-hover:border-teal-400 group-hover:text-teal-200 transition-colors shadow-lg z-10">
+            <div className="absolute -left-4 md:-left-5 top-0 w-8 h-8 rounded-full bg-slate-950 border border-badge-border flex items-center justify-center text-teal-300 group-hover:border-teal-400 group-hover:text-teal-200 transition-colors shadow-lg z-10">
               <Briefcase className="w-4 h-4" />
             </div>
 
@@ -56,7 +56,7 @@ export default function Journey() {
                   <h3 className="text-base sm:text-lg font-bold text-slate-100 tracking-tight">Manager – Treasury Operations</h3>
                   <p className="text-xs text-teal-300/80 font-medium">Axis Bank</p>
                 </div>
-                <div className="inline-flex self-start sm:self-center items-center gap-1 px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-[9px] font-mono text-slate-300 uppercase">
+                <div className="inline-flex self-start sm:self-center items-center gap-1 px-2.5 py-1 rounded-lg bg-badge-bg border border-badge-border text-[9px] font-mono text-slate-300 uppercase">
                   Treasury & Financial Markets
                 </div>
               </div>
@@ -68,7 +68,7 @@ export default function Journey() {
 
               {/* Grid of professional exposure items */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
-                <div className="space-y-1.5 p-3 rounded-xl bg-white/[0.02] border border-white/5">
+                <div className="space-y-1.5 p-3 rounded-xl bg-badge-bg border border-badge-border">
                   <span className="text-[10px] font-mono text-teal-400 uppercase font-semibold flex items-center gap-1.5">
                     <TrendingUp className="w-3.5 h-3.5" /> Investment & Valuation
                   </span>
@@ -77,7 +77,7 @@ export default function Journey() {
                   </p>
                 </div>
 
-                <div className="space-y-1.5 p-3 rounded-xl bg-white/[0.02] border border-white/5">
+                <div className="space-y-1.5 p-3 rounded-xl bg-badge-bg border border-badge-border">
                   <span className="text-[10px] font-mono text-teal-400 uppercase font-semibold flex items-center gap-1.5">
                     <ShieldCheck className="w-3.5 h-3.5" /> Compliance & Risk
                   </span>
@@ -86,7 +86,7 @@ export default function Journey() {
                   </p>
                 </div>
 
-                <div className="space-y-1.5 p-3 rounded-xl bg-white/[0.02] border border-white/5 md:col-span-2">
+                <div className="space-y-1.5 p-3 rounded-xl bg-badge-bg border border-badge-border md:col-span-2">
                   <span className="text-[10px] font-mono text-teal-400 uppercase font-semibold flex items-center gap-1.5">
                     <Layers className="w-3.5 h-3.5" /> Innovation & Coordination
                   </span>
@@ -103,7 +103,7 @@ export default function Journey() {
           <div className="relative pl-8 md:pl-10 group">
             
             {/* Timeline node icon */}
-            <div className="absolute -left-4 md:-left-5 top-0 w-8 h-8 rounded-full bg-slate-950 border border-white/10 flex items-center justify-center text-teal-300 group-hover:border-teal-400 group-hover:text-teal-200 transition-colors shadow-lg z-10">
+            <div className="absolute -left-4 md:-left-5 top-0 w-8 h-8 rounded-full bg-slate-950 border border-badge-border flex items-center justify-center text-teal-300 group-hover:border-teal-400 group-hover:text-teal-200 transition-colors shadow-lg z-10">
               <Award className="w-4 h-4" />
             </div>
 
@@ -125,7 +125,7 @@ export default function Journey() {
                   <h3 className="text-base sm:text-lg font-bold text-slate-100 tracking-tight">Article Assistant</h3>
                   <p className="text-xs text-teal-300/80 font-medium">Bhadade Lahoti and Company</p>
                 </div>
-                <div className="text-xs font-mono text-slate-400 bg-white/5 border border-white/10 px-3 py-1 rounded-lg self-start sm:self-center">
+                <div className="text-xs font-mono text-slate-400 bg-badge-bg border border-badge-border px-3 py-1 rounded-lg self-start sm:self-center">
                   3 Years Full-Time
                 </div>
               </div>
@@ -144,7 +144,7 @@ export default function Journey() {
                   {industries.map((industry, index) => (
                     <span 
                       key={index} 
-                      className="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-slate-200 text-xs font-medium hover:border-teal-500/30 hover:bg-teal-500/5 transition-all cursor-default"
+                      className="px-2.5 py-1 rounded-lg bg-badge-bg border border-badge-border text-slate-200 text-xs font-medium hover:border-teal-500/30 hover:bg-teal-500/5 transition-all cursor-default"
                     >
                       {industry}
                     </span>
@@ -155,7 +155,7 @@ export default function Journey() {
               {/* Professional Insights bullet grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 pt-1 text-xs">
                 <div className="flex gap-2.5 items-start">
-                  <div className="mt-1 p-1 rounded-md bg-white/5 border border-white/10 text-teal-300 flex-shrink-0">
+                  <div className="mt-1 p-1 rounded-md bg-badge-bg border border-badge-border text-teal-300 flex-shrink-0">
                     <Target className="w-3 h-3" />
                   </div>
                   <div className="space-y-0.5">
@@ -167,7 +167,7 @@ export default function Journey() {
                 </div>
 
                 <div className="flex gap-2.5 items-start">
-                  <div className="mt-1 p-1 rounded-md bg-white/5 border border-white/10 text-teal-300 flex-shrink-0">
+                  <div className="mt-1 p-1 rounded-md bg-badge-bg border border-badge-border text-teal-300 flex-shrink-0">
                     <Users className="w-3 h-3" />
                   </div>
                   <div className="space-y-0.5">
@@ -179,7 +179,7 @@ export default function Journey() {
                 </div>
 
                 <div className="flex gap-2.5 items-start">
-                  <div className="mt-1 p-1 rounded-md bg-white/5 border border-white/10 text-teal-300 flex-shrink-0">
+                  <div className="mt-1 p-1 rounded-md bg-badge-bg border border-badge-border text-teal-300 flex-shrink-0">
                     <ShieldCheck className="w-3 h-3" />
                   </div>
                   <div className="space-y-0.5">
@@ -191,7 +191,7 @@ export default function Journey() {
                 </div>
 
                 <div className="flex gap-2.5 items-start">
-                  <div className="mt-1 p-1 rounded-md bg-white/5 border border-white/10 text-teal-300 flex-shrink-0">
+                  <div className="mt-1 p-1 rounded-md bg-badge-bg border border-badge-border text-teal-300 flex-shrink-0">
                     <CheckCircle className="w-3 h-3" />
                   </div>
                   <div className="space-y-0.5">

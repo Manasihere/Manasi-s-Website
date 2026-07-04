@@ -76,7 +76,7 @@ export default function Expertise() {
               className="glass-panel glass-panel-hover p-6 rounded-2xl flex flex-col justify-between space-y-5"
             >
               <div className="space-y-3">
-                <div className="p-2 rounded-xl bg-white/5 border border-white/10 w-10 h-10 flex items-center justify-center">
+                <div className="p-2 rounded-xl bg-badge-bg border border-badge-border w-10 h-10 flex items-center justify-center">
                   {skill.icon}
                 </div>
                 <h4 className="text-sm font-bold text-slate-200 tracking-tight">{skill.title}</h4>

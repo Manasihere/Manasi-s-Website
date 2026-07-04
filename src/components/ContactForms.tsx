@@ -49,7 +49,19 @@ export default function ContactForms({ onSubmissionSuccess }: ContactFormsProps)
 
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!contactName || !contactEmail || !contactSubject || !contactMessage) return;
+    
+    // Validate empty fields
+    if (!contactName.trim() || !contactEmail.trim() || !contactSubject.trim() || !contactMessage.trim()) {
+      setContactError("Please fill in all required fields.");
+      return;
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(contactEmail)) {
+      setContactError("Please enter a valid email address.");
+      return;
+    }
 
     setContactSubmitting(true);
     setContactError(null);
@@ -74,10 +86,11 @@ export default function ContactForms({ onSubmissionSuccess }: ContactFormsProps)
         setContactMessage("");
         if (onSubmissionSuccess) onSubmissionSuccess();
       } else {
-        throw new Error("Could not submit the message. Please try again.");
+        const data = await response.json().catch(() => ({}));
+        throw new Error(data.error || "Unable to send message at this time. Please try again.");
       }
     } catch (err: any) {
-      setContactError(err.message || "An unexpected error occurred.");
+      setContactError(err.message || "An unexpected error occurred. Please try again.");
     } finally {
       setContactSubmitting(false);
     }
@@ -85,7 +98,19 @@ export default function ContactForms({ onSubmissionSuccess }: ContactFormsProps)
 
   const handleResumeSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!resumeName || !resumeCompany || !resumeDesignation || !resumeEmail || !resumePurpose) return;
+    
+    // Validate empty fields
+    if (!resumeName.trim() || !resumeCompany.trim() || !resumeDesignation.trim() || !resumeEmail.trim() || !resumePurpose.trim()) {
+      setResumeError("Please fill in all required fields.");
+      return;
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(resumeEmail)) {
+      setResumeError("Please enter a valid email address.");
+      return;
+    }
 
     setResumeSubmitting(true);
     setResumeError(null);
@@ -112,10 +137,11 @@ export default function ContactForms({ onSubmissionSuccess }: ContactFormsProps)
         setResumePurpose("");
         if (onSubmissionSuccess) onSubmissionSuccess();
       } else {
-        throw new Error("Could not submit the resume request. Please try again.");
+        const data = await response.json().catch(() => ({}));
+        throw new Error(data.error || "Unable to submit request at this time. Please try again.");
       }
     } catch (err: any) {
-      setResumeError(err.message || "An unexpected error occurred.");
+      setResumeError(err.message || "An unexpected error occurred. Please try again.");
     } finally {
       setResumeSubmitting(false);
     }
@@ -142,7 +168,7 @@ export default function ContactForms({ onSubmissionSuccess }: ContactFormsProps)
         </div>
 
         {/* Centralized Glassmorphic Premium Contact Hub */}
-        <div className="glass-panel border border-white/10 bg-slate-900/20 backdrop-blur-md rounded-3xl p-8 sm:p-10 shadow-2xl relative overflow-hidden group max-w-2xl mx-auto">
+        <div className="glass-panel border border-badge-border bg-badge-bg backdrop-blur-md rounded-3xl p-8 sm:p-10 shadow-2xl relative overflow-hidden group max-w-2xl mx-auto">
           
           <div className="absolute -right-12 -bottom-12 w-48 h-48 rounded-full bg-teal-500/5 blur-3xl pointer-events-none group-hover:bg-teal-500/10 transition-colors duration-500" />
           
@@ -162,7 +188,7 @@ export default function ContactForms({ onSubmissionSuccess }: ContactFormsProps)
               </a>
             </div>
 
-            <div className="w-full h-px bg-white/5" />
+            <div className="w-full h-px bg-badge-bg" />
 
             {/* Premium Action Grid */}
             <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -172,7 +198,7 @@ export default function ContactForms({ onSubmissionSuccess }: ContactFormsProps)
                 href="https://www.linkedin.com/in/manasi-badgujar"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl bg-slate-900 hover:bg-slate-850 text-slate-200 hover:text-teal-300 border border-white/5 hover:border-teal-500/20 shadow-md transition-all duration-300 font-sans text-xs font-bold uppercase tracking-wider cursor-pointer group"
+                className="flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl bg-slate-900 hover:bg-slate-850 text-slate-200 hover:text-teal-300 border border-badge-border hover:border-teal-500/20 shadow-md transition-all duration-300 font-sans text-xs font-bold uppercase tracking-wider cursor-pointer group"
               >
                 <Linkedin className="w-4 h-4 text-teal-400 group-hover:scale-110 transition-transform" />
                 <span>Connect</span>
@@ -184,7 +210,7 @@ export default function ContactForms({ onSubmissionSuccess }: ContactFormsProps)
                   setResumeSuccess(false);
                   setIsResumeModalOpen(true);
                 }}
-                className="flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl bg-slate-900 hover:bg-slate-850 text-slate-200 hover:text-teal-300 border border-white/5 hover:border-teal-500/20 shadow-md transition-all duration-300 font-sans text-xs font-bold uppercase tracking-wider cursor-pointer group"
+                className="flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl bg-slate-900 hover:bg-slate-850 text-slate-200 hover:text-teal-300 border border-badge-border hover:border-teal-500/20 shadow-md transition-all duration-300 font-sans text-xs font-bold uppercase tracking-wider cursor-pointer group"
               >
                 <FileText className="w-4 h-4 text-teal-400 group-hover:scale-110 transition-transform" />
                 <span>Request Resume</span>
@@ -229,7 +255,7 @@ export default function ContactForms({ onSubmissionSuccess }: ContactFormsProps)
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 15 }}
               transition={{ type: "spring", damping: 25, stiffness: 350 }}
-              className="relative w-full max-w-lg bg-slate-950 border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden focus:outline-none"
+              className="relative w-full max-w-lg bg-slate-950 border border-badge-border rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden focus:outline-none"
               role="dialog"
               aria-modal="true"
             >
@@ -237,7 +263,7 @@ export default function ContactForms({ onSubmissionSuccess }: ContactFormsProps)
               <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-teal-500/5 blur-2xl pointer-events-none" />
 
               {/* Header */}
-              <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/5">
+              <div className="flex items-center justify-between mb-6 pb-4 border-b border-badge-border">
                 <div className="flex items-center gap-2.5">
                   <div className="p-2 rounded-xl bg-teal-500/10 border border-teal-500/20 text-teal-300">
                     <FileText className="w-5 h-5" />
@@ -253,7 +279,7 @@ export default function ContactForms({ onSubmissionSuccess }: ContactFormsProps)
                 </div>
                 <button
                   onClick={() => setIsResumeModalOpen(false)}
-                  className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-slate-200 border border-white/5 transition-all cursor-pointer"
+                  className="p-1.5 rounded-lg bg-badge-bg hover:bg-badge-hover text-slate-400 hover:text-slate-200 border border-badge-border transition-all cursor-pointer"
                   title="Close modal"
                 >
                   <X className="w-4 h-4" />
@@ -280,7 +306,7 @@ export default function ContactForms({ onSubmissionSuccess }: ContactFormsProps)
                     </div>
                     <button
                       onClick={() => setIsResumeModalOpen(false)}
-                      className="px-5 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 text-xs font-semibold rounded-xl cursor-pointer transition-colors"
+                      className="px-5 py-2.5 bg-badge-bg hover:bg-badge-hover border border-badge-border text-slate-300 text-xs font-semibold rounded-xl cursor-pointer transition-colors"
                     >
                       Done
                     </button>
@@ -302,7 +328,7 @@ export default function ContactForms({ onSubmissionSuccess }: ContactFormsProps)
                           value={resumeName}
                           onChange={(e) => setResumeName(e.target.value)}
                           placeholder="e.g. Anand Sharma"
-                          className="w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2.5 placeholder-slate-600 text-slate-200 focus:border-teal-500/40 focus:outline-none transition-colors"
+                          className="w-full bg-badge-bg border border-badge-border rounded-xl px-3.5 py-2.5 placeholder-slate-600 text-slate-200 focus:border-teal-500/40 focus:outline-none transition-colors"
                         />
                       </div>
                       <div className="space-y-1">
@@ -313,7 +339,7 @@ export default function ContactForms({ onSubmissionSuccess }: ContactFormsProps)
                           value={resumeEmail}
                           onChange={(e) => setResumeEmail(e.target.value)}
                           placeholder="anand@sharmacapital.com"
-                          className="w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2.5 placeholder-slate-600 text-slate-200 focus:border-teal-500/40 focus:outline-none transition-colors"
+                          className="w-full bg-badge-bg border border-badge-border rounded-xl px-3.5 py-2.5 placeholder-slate-600 text-slate-200 focus:border-teal-500/40 focus:outline-none transition-colors"
                         />
                       </div>
                     </div>
@@ -327,7 +353,7 @@ export default function ContactForms({ onSubmissionSuccess }: ContactFormsProps)
                           value={resumeCompany}
                           onChange={(e) => setResumeCompany(e.target.value)}
                           placeholder="Sharma Advisory Partners"
-                          className="w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2.5 placeholder-slate-600 text-slate-200 focus:border-teal-500/40 focus:outline-none transition-colors"
+                          className="w-full bg-badge-bg border border-badge-border rounded-xl px-3.5 py-2.5 placeholder-slate-600 text-slate-200 focus:border-teal-500/40 focus:outline-none transition-colors"
                         />
                       </div>
                       <div className="space-y-1">
@@ -338,7 +364,7 @@ export default function ContactForms({ onSubmissionSuccess }: ContactFormsProps)
                           value={resumeDesignation}
                           onChange={(e) => setResumeDesignation(e.target.value)}
                           placeholder="Managing Director"
-                          className="w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2.5 placeholder-slate-600 text-slate-200 focus:border-teal-500/40 focus:outline-none transition-colors"
+                          className="w-full bg-badge-bg border border-badge-border rounded-xl px-3.5 py-2.5 placeholder-slate-600 text-slate-200 focus:border-teal-500/40 focus:outline-none transition-colors"
                         />
                       </div>
                     </div>
@@ -351,7 +377,7 @@ export default function ContactForms({ onSubmissionSuccess }: ContactFormsProps)
                         value={resumePurpose}
                         onChange={(e) => setResumePurpose(e.target.value)}
                         placeholder="Evaluating professional backgrounds for leadership consulting or corporate advisory options..."
-                        className="w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2.5 placeholder-slate-600 text-slate-200 focus:border-teal-500/40 focus:outline-none transition-colors resize-none"
+                        className="w-full bg-badge-bg border border-badge-border rounded-xl px-3.5 py-2.5 placeholder-slate-600 text-slate-200 focus:border-teal-500/40 focus:outline-none transition-colors resize-none"
                       />
                     </div>
 
@@ -404,7 +430,7 @@ export default function ContactForms({ onSubmissionSuccess }: ContactFormsProps)
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 15 }}
               transition={{ type: "spring", damping: 25, stiffness: 350 }}
-              className="relative w-full max-w-lg bg-slate-950 border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden focus:outline-none"
+              className="relative w-full max-w-lg bg-slate-950 border border-badge-border rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden focus:outline-none"
               role="dialog"
               aria-modal="true"
             >
@@ -412,7 +438,7 @@ export default function ContactForms({ onSubmissionSuccess }: ContactFormsProps)
               <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-teal-500/5 blur-2xl pointer-events-none" />
 
               {/* Header */}
-              <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/5">
+              <div className="flex items-center justify-between mb-6 pb-4 border-b border-badge-border">
                 <div className="flex items-center gap-2.5">
                   <div className="p-2 rounded-xl bg-teal-500/10 border border-teal-500/20 text-teal-300">
                     <Mail className="w-5 h-5" />
@@ -428,7 +454,7 @@ export default function ContactForms({ onSubmissionSuccess }: ContactFormsProps)
                 </div>
                 <button
                   onClick={() => setIsMessageModalOpen(false)}
-                  className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-slate-200 border border-white/5 transition-all cursor-pointer"
+                  className="p-1.5 rounded-lg bg-badge-bg hover:bg-badge-hover text-slate-400 hover:text-slate-200 border border-badge-border transition-all cursor-pointer"
                   title="Close modal"
                 >
                   <X className="w-4 h-4" />
@@ -450,12 +476,12 @@ export default function ContactForms({ onSubmissionSuccess }: ContactFormsProps)
                     <div className="space-y-1.5">
                       <h4 className="font-bold text-slate-100 text-sm">Message Transmitted</h4>
                       <p className="text-xs text-slate-300 max-w-sm mx-auto leading-relaxed font-normal">
-                        Thank you for reaching out. I have received your message and will review it shortly.
+                        Thank you for your message. I will get back to you soon.
                       </p>
                     </div>
                     <button
                       onClick={() => setIsMessageModalOpen(false)}
-                      className="px-5 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 text-xs font-semibold rounded-xl cursor-pointer transition-colors"
+                      className="px-5 py-2.5 bg-badge-bg hover:bg-badge-hover border border-badge-border text-slate-300 text-xs font-semibold rounded-xl cursor-pointer transition-colors"
                     >
                       Done
                     </button>
@@ -477,7 +503,7 @@ export default function ContactForms({ onSubmissionSuccess }: ContactFormsProps)
                           value={contactName}
                           onChange={(e) => setContactName(e.target.value)}
                           placeholder="e.g. Milind Shinde"
-                          className="w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2.5 placeholder-slate-600 text-slate-200 focus:border-teal-500/40 focus:outline-none transition-colors"
+                          className="w-full bg-badge-bg border border-badge-border rounded-xl px-3.5 py-2.5 placeholder-slate-600 text-slate-200 focus:border-teal-500/40 focus:outline-none transition-colors"
                         />
                       </div>
                       <div className="space-y-1">
@@ -488,7 +514,7 @@ export default function ContactForms({ onSubmissionSuccess }: ContactFormsProps)
                           value={contactEmail}
                           onChange={(e) => setContactEmail(e.target.value)}
                           placeholder="milind@shindeconsulting.com"
-                          className="w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2.5 placeholder-slate-600 text-slate-200 focus:border-teal-500/40 focus:outline-none transition-colors"
+                          className="w-full bg-badge-bg border border-badge-border rounded-xl px-3.5 py-2.5 placeholder-slate-600 text-slate-200 focus:border-teal-500/40 focus:outline-none transition-colors"
                         />
                       </div>
                     </div>
@@ -501,7 +527,7 @@ export default function ContactForms({ onSubmissionSuccess }: ContactFormsProps)
                         value={contactSubject}
                         onChange={(e) => setContactSubject(e.target.value)}
                         placeholder="Discussion regarding strategic consulting advisory..."
-                        className="w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2.5 placeholder-slate-600 text-slate-200 focus:border-teal-500/40 focus:outline-none transition-colors"
+                        className="w-full bg-badge-bg border border-badge-border rounded-xl px-3.5 py-2.5 placeholder-slate-600 text-slate-200 focus:border-teal-500/40 focus:outline-none transition-colors"
                       />
                     </div>
 
@@ -513,7 +539,7 @@ export default function ContactForms({ onSubmissionSuccess }: ContactFormsProps)
                         value={contactMessage}
                         onChange={(e) => setContactMessage(e.target.value)}
                         placeholder="Write your message here..."
-                        className="w-full bg-white/5 border border-white/10 rounded-xl px-3.5 py-2.5 placeholder-slate-600 text-slate-200 focus:border-teal-500/40 focus:outline-none transition-colors resize-none"
+                        className="w-full bg-badge-bg border border-badge-border rounded-xl px-3.5 py-2.5 placeholder-slate-600 text-slate-200 focus:border-teal-500/40 focus:outline-none transition-colors resize-none"
                       />
                     </div>
 

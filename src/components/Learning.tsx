@@ -63,13 +63,13 @@ export default function Learning() {
                   className="glass-panel glass-panel-hover p-5 rounded-xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3"
                 >
                   <div className="space-y-1">
-                    <span className="inline-block text-[9px] font-mono font-bold text-teal-400 uppercase px-2 py-0.5 rounded bg-white/5 border border-white/10">
+                    <span className="inline-block text-[9px] font-mono font-bold text-teal-400 uppercase px-2 py-0.5 rounded bg-badge-bg border border-badge-border">
                       {cert.tag}
                     </span>
                     <h5 className="text-sm font-bold text-slate-100 tracking-tight leading-snug">{cert.title}</h5>
                     <p className="text-xs text-slate-400 font-medium">{cert.organization}</p>
                   </div>
-                  <div className="text-[11px] font-mono text-slate-400 px-3 py-1 bg-white/5 border border-white/10 rounded-lg">
+                  <div className="text-[11px] font-mono text-slate-400 px-3 py-1 bg-badge-bg border border-badge-border rounded-lg">
                     {cert.date}
                   </div>
                 </div>
